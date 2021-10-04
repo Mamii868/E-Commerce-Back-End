@@ -21,7 +21,7 @@ try{
     res.status(404).json({message: "product does not exist"});
     return;
   }
-  res.status(200).json(product);
+  res.status(200).json(productInfo);
 } catch (err) {
   res.status(500).json(err);
 }
@@ -113,7 +113,7 @@ router.delete('/:id', async (req, res) => {
       res.status(404).json({message: "product does not exist"});
       return;
     }
-    res.status(200).json(product);
+    res.status(200).json(productInfo);
   } catch (err) {
     res.status(500).json(err);
   }

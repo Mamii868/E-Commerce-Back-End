@@ -16,8 +16,8 @@ router.get('/', async (req, res) => {
 // get one product
 router.get('/:id', async (req, res) => {
 try{
-  const product = await Product.findByPk(req.params.id)
-  if (!product) {
+  const productInfo = await Product.findByPk(req.params.id)
+  if (!productInfo) {
     res.status(404).json({message: "product does not exist"});
     return;
   }
@@ -101,8 +101,22 @@ router.put('/:id', (req, res) => {
     });
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   // delete one product by its `id` value
-});
+  try {
+    const productInfo = await Product.destroy({
+      where: {
+        id: req.params.id
+      }
+    });
+    if (!productInfo) {
+      res.status(404).json({message: "product does not exist"});
+      return;
+    }
+    res.status(200).json(product);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+  });
 
 module.exports = router;
